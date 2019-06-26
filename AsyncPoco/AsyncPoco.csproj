@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<PackageId>AsyncPoco</PackageId>
-		<Version>2.0.1</Version>
+		<PackageId>AsyncPocoDpy</PackageId>
+		<Version>1.0.0</Version>
 		<TargetFrameworks>net45;netstandard1.3;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Authors>Todd Menier</Authors>
-		<Description>A cross-platform, fully asynchronous fork of the popular PetaPoco micro-ORM. Supports SQL Server, Oracle, MySQL, PostgreSQL, SQLite, and SQL Server CE. Runs on .NET Framework (4.5 and above), .NET Core (1.0 and 2.0), Mono, Xamarin (iOS, Mac, and Android), and UWP.</Description>
-		<Copyright>Copyright 2018 Todd Menier</Copyright>
-		<PackageProjectUrl>https://github.com/tmenier/AsyncPoco</PackageProjectUrl>
-		<PackageLicenseUrl>https://raw.githubusercontent.com/CollaboratingPlatypus/PetaPoco/development/LICENSE.txt</PackageLicenseUrl>
+		<Authors>Dominik Pytlewski and others</Authors>
+		<Description>Fork of AsyncPoco with support for array based parameters</Description>
+		<Copyright>Copyright 2019 Dominik Pytlewski, Copyright 2018 Todd Menier</Copyright>
+		<PackageProjectUrl>https://github.com/d-p-y/AsyncPoco</PackageProjectUrl>
+		<PackageLicenseUrl>https://raw.githubusercontent.com/d-p-y/AsyncPoco/LICENSE.txt</PackageLicenseUrl>
 		<PackageTags>orm micro-orm database sql async asynchronous netcore dotnetcore</PackageTags>
-		<PackageReleaseNotes>https://github.com/tmenier/AsyncPoco/releases</PackageReleaseNotes>
-		<RepositoryUrl>https://github.com/tmenier/AsyncPoco</RepositoryUrl>
+		<RepositoryUrl>https://github.com/d-p-y/AsyncPoco</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
