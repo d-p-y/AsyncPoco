@@ -5,7 +5,7 @@
 		<Version>2.0.2</Version>
 		<TargetFrameworks>net45;netstandard1.3;netstandard2.0</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Authors>Dominik Pytlewski and others</Authors>
+		<Authors>Dominik Pytlewski that forked work of Todd Menier that forked CollaboratingPlatypus/PetaPoco</Authors>
 		<Description>Fork of AsyncPoco with support for array based parameters</Description>
 		<Copyright>Copyright 2019 Dominik Pytlewski, Copyright 2018 Todd Menier</Copyright>
 		<PackageProjectUrl>https://github.com/d-p-y/AsyncPoco</PackageProjectUrl>
