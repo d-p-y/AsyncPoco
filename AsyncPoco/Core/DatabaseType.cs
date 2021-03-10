@@ -20,9 +20,7 @@ namespace AsyncPoco.Internal
 		/// Returns the prefix used to delimit parameters in SQL query strings.
 		/// </summary>
 		public virtual string ParameterPrefix { get; } = "@";
-
-        public virtual bool SupportsArraySqlParameters { get; } = false;
-
+		
 		/// <summary>
 		/// Converts a supplied C# object value into a value suitable for passing to the database
 		/// </summary>

@@ -13,7 +13,7 @@ namespace AsyncPoco.Internal
 	internal static class ParametersHelper
 	{
 		// Helper to handle named parameters from object properties
-		public static string ProcessParams(string sql, object[] args_src, List<object> args_dest, bool expandCollectionParameters)
+		public static string ProcessParams(string sql, object[] args_src, List<object> args_dest, bool expandCollectionParameters, Database.ParameterValueAdapter treatParameterValue)
 		{
 			return rxParams.Replace(sql, m =>
 			{
@@ -49,23 +49,32 @@ namespace AsyncPoco.Internal
 						throw new ArgumentException(string.Format("Parameter '@{0}' specified but none of the passed arguments have a property with this name (in '{1}')", param, sql));
 				}
 
+				var isCollection =
+                    (arg_val as System.Collections.IEnumerable) != null &&
+                    (arg_val as string) == null &&
+                    (arg_val as byte[]) == null;
+
 				// Expand collections to parameter lists
-				if (expandCollectionParameters &&
-				    (arg_val as System.Collections.IEnumerable) != null &&
-					(arg_val as string) == null &&
-					(arg_val as byte[]) == null)
-				{
+			    if (isCollection && expandCollectionParameters)
+                {
 					var sb = new StringBuilder();
 					foreach (var i in arg_val as System.Collections.IEnumerable)
 					{
 						sb.Append((sb.Length == 0 ? "@" : ",@") + args_dest.Count.ToString());
-						args_dest.Add(i);
+						args_dest.Add(treatParameterValue(Database.ParameterKind.CollectionItem,i));
 					}
 					return sb.ToString();
 				}
 				else
 				{
-					args_dest.Add(arg_val);
+                    if (isCollection) {
+                        args_dest.Add(treatParameterValue(Database.ParameterKind.Collection, arg_val));
+					}
+                    else 
+                    {
+                        args_dest.Add(treatParameterValue(Database.ParameterKind.NonCollection, arg_val));
+					}
+					
 					return "@" + (args_dest.Count - 1).ToString();
 				}
 			}

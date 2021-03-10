@@ -11,9 +11,7 @@ namespace AsyncPoco.DatabaseTypes
 {
 	class PostgreSQLDatabaseType : DatabaseType
 	{
-	    public override bool SupportsArraySqlParameters { get; } = true;
-
-		public override object MapParameterValue(object value)
+        public override object MapParameterValue(object value)
 		{
 			// Don't map bools to ints in PostgreSQL
 			if (value.GetType() == typeof(bool))

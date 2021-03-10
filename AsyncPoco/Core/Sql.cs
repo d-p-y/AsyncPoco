@@ -48,6 +48,11 @@ namespace AsyncPoco
         /// </summary>
 	    public bool ExpandCollectionParameters {get; set; } = true;
 
+		/// <summary>
+		/// Provides ability to prepare sql parameter value before passing it to DbCommand. Typically to support nonstandard sql parameters.
+		/// </summary>
+        public Database.ParameterValueAdapter PrepareParameterValue = (_,x) => x;
+
 		string _sql;
 		object[] _args;
 		Sql _rhs;
@@ -136,7 +141,7 @@ namespace AsyncPoco
 					sb.Append("\n");
 				}
 
-				var sql = ParametersHelper.ProcessParams(_sql, _args, args, ExpandCollectionParameters);
+				var sql = ParametersHelper.ProcessParams(_sql, _args, args, ExpandCollectionParameters, PrepareParameterValue);
 
 				if (Is(lhs, "WHERE ") && Is(this, "WHERE "))
 					sql = "AND " + sql.Substring(6);

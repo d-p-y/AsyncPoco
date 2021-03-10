@@ -42,6 +42,19 @@ namespace AsyncPoco
 			}
 		}
 
+		public enum ParameterKind {
+			NonCollection,
+            Collection,
+            CollectionItem
+		}
+
+        public delegate object ParameterValueAdapter(ParameterKind kind, object inp);
+
+		/// <summary>
+		/// Provides ability to prepare sql parameter value before passing it to DbCommand. Typically to support nonstandard sql parameters.
+		/// </summary>
+		public ParameterValueAdapter PrepareParameterValue = (_, x) => x;
+
 		#region IDisposable
 
 		/// <summary>
@@ -406,9 +419,7 @@ namespace AsyncPoco
 			// Perform named argument replacements
 			if (EnableNamedParams) {
 				var new_args = new List<object>();
-                var expandCollectionBasedParams = 
-                    _dbType.SupportsArraySqlParameters && EnableExpandSqlParametersToLists;
-				sql = ParametersHelper.ProcessParams(sql, args, new_args, expandCollectionBasedParams);
+                sql = ParametersHelper.ProcessParams(sql, args, new_args, ShouldExpandSqlParametersToLists, PrepareParameterValue);
 				args = new_args.ToArray();
 			}
 
@@ -2154,7 +2165,7 @@ namespace AsyncPoco
         /// Some databases (Postgresql via Npgsql) support passing arrays.
         /// For backward compatibility this feature is disabled by default.
         /// </summary>
-        public bool EnableExpandSqlParametersToLists {get; set;} = true;
+        public bool ShouldExpandSqlParametersToLists {get; set;} = true;
 
 		#endregion
 
