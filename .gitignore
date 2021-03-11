@@ -7,3 +7,4 @@ csj/csj.exe
 csj/csj.pdb
 *.user
 .vs
+.vscode
