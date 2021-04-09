@@ -49,13 +49,18 @@ namespace AsyncPoco.Internal
 						throw new ArgumentException(string.Format("Parameter '@{0}' specified but none of the passed arguments have a property with this name (in '{1}')", param, sql));
 				}
 
-				var isCollection =
+                var isCollectionBackwardCompatibleWithAsyncPoco =
                     (arg_val as System.Collections.IEnumerable) != null &&
                     (arg_val as string) == null &&
                     (arg_val as byte[]) == null;
 
+				var isCollectionProper =
+                    (arg_val as System.Collections.IEnumerable) != null &&
+                    (arg_val as string) == null;
+
 				// Expand collections to parameter lists
-			    if (isCollection && expandCollectionParameters)
+				
+			    if (expandCollectionParameters && isCollectionBackwardCompatibleWithAsyncPoco)
                 {
 					var sb = new StringBuilder();
 					foreach (var i in arg_val as System.Collections.IEnumerable)
@@ -67,7 +72,7 @@ namespace AsyncPoco.Internal
 				}
 				else
 				{
-                    if (isCollection) {
+                    if (!expandCollectionParameters && isCollectionProper) {
                         args_dest.Add(treatParameterValue(Database.ParameterKind.Collection, arg_val));
 					}
                     else 
